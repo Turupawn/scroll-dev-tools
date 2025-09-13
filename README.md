@@ -19,7 +19,7 @@ forge test -vv
 
 ### Run Specific Test
 ```bash
-forge test --match-contract EASDemoTest -vv
+forge test --match-contract EASTest -vv
 ```
 
 ## Foundry
