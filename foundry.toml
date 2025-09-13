@@ -5,7 +5,6 @@ libs = ["lib"]
 
 # Remappings
 remappings = [
-    "@ethereum-attestation-service/eas-contracts/=lib/eas-contracts/",
     "forge-std/=lib/forge-std/src/"
 ]
 
