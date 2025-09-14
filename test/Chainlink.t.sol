@@ -11,11 +11,8 @@ contract ChainlinkTest is Test {
     address public constant PRICE_FEED_ADDRESS = 0x87dce67002e66C17BC0d723Fe20D736b80CAaFda;
 
     function setUp() public {
-        // Fork Scroll Sepolia testnet
         uint256 forkId = vm.createFork("https://sepolia-rpc.scroll.io");
         vm.selectFork(forkId);
-
-        // Deploy the Chainlink contract
         chainlink = new Chainlink();
     }
 

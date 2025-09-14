@@ -51,16 +51,8 @@ interface IPool {
 }
 
 interface IERC20 {
-    function totalSupply() external view returns (uint256);
-
     function balanceOf(address account) external view returns (uint256);
-
-    function transfer(address to, uint256 value) external returns (bool);
-
-    function allowance(address owner, address spender) external view returns (uint256);
-
     function approve(address spender, uint256 value) external returns (bool);
-
     function transferFrom(address from, address to, uint256 value) external returns (bool);
 }
 
@@ -69,8 +61,6 @@ contract Aave {
     address public immutable STAKED_TOKEN_ADDRESS;
     address public immutable ATOKEN_ADDRESS;
     address public immutable OWNER;
-    mapping(address account => uint256 amount) public stakeByAccount;
-    uint256 public totalStake;
 
     // Ejemplo en Scroll Sepolia
     // Pool Address
@@ -87,27 +77,14 @@ contract Aave {
     }
 
     function stake(uint256 amount) public {
-        totalStake += amount;
-        stakeByAccount[msg.sender] += amount;
         IERC20(STAKED_TOKEN_ADDRESS).transferFrom(msg.sender, address(this), amount);
         IERC20(STAKED_TOKEN_ADDRESS).approve(AAVE_POOL_ADDRESS, amount);
-        IPool(AAVE_POOL_ADDRESS).supply(STAKED_TOKEN_ADDRESS, amount, address(this), 0);
+        IPool(AAVE_POOL_ADDRESS).supply(STAKED_TOKEN_ADDRESS, amount, msg.sender, 0);
     }
 
-    function unstake(uint256 amount) public {
-        require(amount <= stakeByAccount[msg.sender], "Not enough stake");
-        totalStake -= amount;
-        stakeByAccount[msg.sender] -= amount;
-        IPool(AAVE_POOL_ADDRESS).withdraw(STAKED_TOKEN_ADDRESS, amount, msg.sender);
-    }
-
-    function yieldEarned() public view returns (uint256) {
-        return IERC20(ATOKEN_ADDRESS).balanceOf(address(this)) - totalStake;
-    }
-
-    function withdraw(uint256 amount) public {
-        require(msg.sender == OWNER, "Sender is not owner");
-        require(amount <= yieldEarned(), "Maximum withdraw exceeded");
+    function unstake(uint amount) public {
+        IERC20(ATOKEN_ADDRESS).transferFrom(msg.sender, address(this), amount);
+        IERC20(ATOKEN_ADDRESS).approve(AAVE_POOL_ADDRESS, amount);
         IPool(AAVE_POOL_ADDRESS).withdraw(STAKED_TOKEN_ADDRESS, amount, msg.sender);
     }
 }
