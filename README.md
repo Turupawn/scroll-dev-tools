@@ -8,6 +8,8 @@ This repository contains lightweight tests that verify various contracts deploye
 
 - **EAS (Ethereum Attestation Service)**: Tests EAS contract deployment and accessibility on Scroll Sepolia
 - **Chainlink Price Feeds**: Tests Chainlink price feed data retrieval on Scroll Sepolia
+- **Aave Protocol**: Tests Aave lending protocol integration on Scroll Sepolia
+- **Uniswap V3**: Tests Uniswap V3 DEX router accessibility on Scroll Sepolia
 - More tests coming soon...
 
 ## Quick Start
