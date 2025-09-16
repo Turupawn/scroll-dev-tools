@@ -34,18 +34,9 @@ interface IPool {
         address onBehalfOf
     ) external;
 
-    function supply(
-        address asset,
-        uint256 amount,
-        address onBehalfOf,
-        uint16 referralCode
-    ) external;
+    function supply(address asset, uint256 amount, address onBehalfOf, uint16 referralCode) external;
 
-    function withdraw(
-        address asset,
-        uint256 amount,
-        address to
-    ) external returns (uint256);
+    function withdraw(address asset, uint256 amount, address to) external returns (uint256);
 
     function getReserveData(address asset) external view returns (DataTypes.ReserveData memory);
 }
@@ -82,10 +73,9 @@ contract Aave {
         IPool(AAVE_POOL_ADDRESS).supply(STAKED_TOKEN_ADDRESS, amount, msg.sender, 0);
     }
 
-    function unstake(uint amount) public {
+    function unstake(uint256 amount) public {
         IERC20(ATOKEN_ADDRESS).transferFrom(msg.sender, address(this), amount);
         IERC20(ATOKEN_ADDRESS).approve(AAVE_POOL_ADDRESS, amount);
         IPool(AAVE_POOL_ADDRESS).withdraw(STAKED_TOKEN_ADDRESS, amount, msg.sender);
     }
 }
-

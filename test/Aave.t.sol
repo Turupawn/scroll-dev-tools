@@ -34,7 +34,7 @@ contract AaveTest is Test {
         IERC20(aave.ATOKEN_ADDRESS()).approve(address(aave), aTokenBalance);
         aave.unstake(aTokenBalance);
 
-        uint256 finalDaiBalance = IERC20(DAI_ADDRESS).balanceOf(address(this));   
+        uint256 finalDaiBalance = IERC20(DAI_ADDRESS).balanceOf(address(this));
         assertTrue(finalDaiBalance > initialDaiBalance, "Balance should increase due to interest");
     }
 }

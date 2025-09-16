@@ -38,13 +38,7 @@ contract UniV3 {
     // Amount In Max: 40000000000000
     // Amount Out: 1000000000000000000
     // Fee: 3000
-    function swap(
-        address tokenIn,
-        address tokenOut,
-        uint256 amountInMax,
-        uint256 amountOut,
-        uint24 fee
-    ) external {
+    function swap(address tokenIn, address tokenOut, uint256 amountInMax, uint256 amountOut, uint24 fee) external {
         IERC20(tokenIn).transferFrom(msg.sender, address(this), amountInMax);
         IERC20(tokenIn).approve(SCROLL_SEPOLIA_UNIV3_ROUTER_V2, amountInMax);
 
